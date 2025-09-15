@@ -8,10 +8,12 @@ Route::get('/', [TaskController::class, 'index'])->name('tasks.index');
 Route::get('/task', [TaskController::class, 'index'])->name('tasks.filter');
 Route::get('/task/{id}', [TaskController::class, 'edit'])->name('task.edit');
 Route::get('/create', [TaskController::class, 'create'])->name('tasks.create');
+Route::get('/tasks/{id}', [TaskController::class, 'show'])->name('tasks.show');
 
 Route::post('/task/{id}', [TaskController::class, 'completed'])->name('tasks.completed');
 Route::post('store', [TaskController::class, 'store'])->name('tasks.store');
 Route::put('task/{id}', [TaskController::class, 'update'])->name('task.update');
+Route::put('/completed/{id}', [TaskController::class, 'completed'])->name('tasks.completed');
 
 
 Route::middleware('auth')->group(function () {

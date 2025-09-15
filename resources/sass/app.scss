@@ -8,8 +8,8 @@ body {
 
 .page-wrapper {
     display: flex;
-    flex-direction: column;   /* Располагаем header, main, footer вертикально */
-    min-height: 100vh;        /* Минимальная высота = высота окна браузера */
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 .header {

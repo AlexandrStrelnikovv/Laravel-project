@@ -12,24 +12,28 @@ class TaskController extends Controller
 {
     public function index(Request $request)
     {
-        if (Auth::check() === false)
+        if (Auth::check())
         {
             return redirect(route('login'));
         }
-        $user = [
-            'isAuth' => Auth::check(),
-            'user' => Auth::user()->toArray(),
-        ];
-        $userId = (Auth::user()->id);
+
+        $user = Auth::user();
+        $userId = $user->id;
 
         $filter = $request->all();
-        if (empty($request->all())) {
-            $tasks = Task::where('executor_user_id', $userId)->where('status', '!=', 'выполнено')->with('executor')->get()->toArray();
-            return view('task.index', compact('tasks', 'user'));
+        if (empty($filter)) {
+            $tasks = Task::where('executor_user_id', $userId)
+                ->where('status', '!=', 'выполнено')
+                ->with('executor')
+                ->get();
+        } else {
+
+            $tasks = TaskFilter::apply(
+                Task::where('executor_user_id', $userId)->with('executor'),
+                $filter
+            );
         }
 
-        $tasks = Task::query()->where('executor_user_id', $userId)->with('executor');
-        $tasks = TaskFilter::apply($tasks, $filter);
         return view('task.index', compact('tasks', 'user'));
 
     }
@@ -68,5 +72,9 @@ class TaskController extends Controller
         return redirect()->route('tasks.index');
     }
 
+    public function show($id)
+    {
+
+    }
 
 }
