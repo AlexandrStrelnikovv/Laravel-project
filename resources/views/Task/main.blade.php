@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>TaskManager</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+</head>
+<body>
+<div class="page-wrapper">
+    <nav>
+            <div class="header">
+                <div class="nav-menu">
+                        <a class="nav-link" href="{{ route('tasks.index') }}">Главная</a>
+                        <a class="nav-link" href="{{ route('tasks.create') }}">Создать задачу</a>
+                    @if($user['isAuth'] ?? false)
+                        <a>{{ $user['user']['name'] }}</a>
+                    @else
+                        <a class="nav-link" href="{{ route('login') }}">Войти</a>
+                    @endif
+                </div>
+            </div>
+    </nav>
+    <div class="flex-grow-1 container my-4">
+        @yield('content')
+    </div>
+
+    <footer>
+        <div class="footer">
+            footer
+        </div>
+    </footer>
+</div>
+</body>
+</html>
