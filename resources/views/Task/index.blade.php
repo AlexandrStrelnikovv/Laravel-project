@@ -39,6 +39,7 @@
             <th>Статус</th>
             <th>Действия</th>
             <th>Автор задачи</th>
+            <th>Исполнитель задачи</th>
         </tr>
         </thead>
         <tbody>
@@ -53,11 +54,11 @@
                     <a class="done-link" href="{{ route('task.edit', ['id' => $task['id']]) }}">Редактировать</a>
                     <form method="POST" action="{{ route('tasks.completed', ['id' => $task['id']]) }}">
                         @csrf
-                        @method('PUT')
                         <button class="button_done" type="submit">Выполнить</button>
                     </form>
                 </td>
                 <td><span >{{$task['executor']['name']}}</span></td>
+                <td></td>
             </tr>
         @endforeach
         </tbody>

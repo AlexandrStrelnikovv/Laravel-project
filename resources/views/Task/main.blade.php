@@ -14,21 +14,19 @@
             <div class="header">
                 <div class="nav-menu">
                         <a class="nav-link" href="{{ route('tasks.index') }}">Главная</a>
-                        <a class="nav-link" href="{{ route('tasks.create') }}">Создать задачу</a>
                         <a class="nav-link" href="{{ route('tasks.show', ['id' => $user['id']]) }}">Мои задачи</a>
+                        <a class="nav-link" href="{{ route('tasks.create') }}">Создать задачу</a>
 
                         <a>{{ $user['name'] }}</a>
-                        <div>
-                            <form method="POST" action="{{ route('logout') }}">
-                                @csrf
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
 
-                                <x-dropdown-link :href="route('logout')"
-                                                 onclick="event.preventDefault();
-                            this.closest('form').submit();">
-                                    {{ __('Выйти') }}
-                                </x-dropdown-link>
-                            </form>
-                        </div>
+                            <x-dropdown-link :href="route('logout')"
+                                             onclick="event.preventDefault();
+                        this.closest('form').submit();">
+                                {{ __('Выйти') }}
+                            </x-dropdown-link>
+                        </form>
                 </div>
             </div>
     </nav>

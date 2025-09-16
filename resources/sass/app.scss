@@ -27,16 +27,21 @@ body {
     gap: 20px;
 }
 
-.nav-link,.done-link{
+.nav-link,
+.done-link {
     color: black;
     text-decoration: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-.task-content {
-    background-color: #f3f4f6;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    padding: 20px;
-    border-radius: 10px;
+.button_done {
+    border-radius: 5px;
+    padding: 8px 12px;
+    font-size: 14px;
+    white-space: nowrap;
+    min-width: auto;
 }
 
 .task-table {
@@ -45,6 +50,7 @@ body {
     border: 1px solid #e5e7eb;
     border-radius: 8px;
     overflow: hidden;
+    table-layout: fixed;
 }
 
 .task-table th,
@@ -53,7 +59,14 @@ body {
     text-align: left;
     border-bottom: 1px solid #e5e7eb;
     font-size: 14px;
-    word-break: break-word;
+}
+.task-table th,
+.task-table td {
+    padding: 18px 26px;
+    text-align: left;
+    border-bottom: 1px solid #e5e7eb;
+    font-size: 14px;
+    max-width: 100px;
 }
 
 .task-table th {

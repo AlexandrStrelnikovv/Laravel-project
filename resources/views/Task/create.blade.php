@@ -22,8 +22,8 @@
                 <label>Исполнитель</label>
                 <select class="form-select" name="executor_user_id">
                     <option value="" hidden=""></option>
-                    @foreach($users as $user)
-                        <option value="{{$user['id']}}">{{ $user['name'] }}</option>
+                    @foreach($executors as $executor)
+                        <option value="{{$executor['id']}}">{{ $executor['name'] }}</option>
                     @endforeach
                 </select>
 

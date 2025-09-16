@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('description');
             $table->string('priority');
             $table->string('status')->default('выполняется');
-            $table->integer('created_userId');
+            $table->integer('created_user_Id');
             $table->boolean('completed')->default(false);
             $table->foreignId('executor_user_id')->index()->constrained('users');
             $table->timestamps();
