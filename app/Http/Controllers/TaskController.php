@@ -12,11 +12,6 @@ class TaskController extends Controller
 {
     public function index(Request $request)
     {
-        if (Auth::check() === false)
-        {
-            return redirect(route('login'));
-        }
-
         $user = Auth::user();
         $userId = Auth::user()->id;
 
@@ -25,15 +20,15 @@ class TaskController extends Controller
             $tasks = Task::where('executor_user_id', $userId)
                 ->where('status', '!=', 'выполнено')
                 ->with('executor')
+                ->with('created_user')
                 ->get();
         } else {
 
             $tasks = TaskFilter::apply(
-                Task::where('executor_user_id', $userId)->with('executor'),
+                Task::where('executor_user_id', $userId)->with('executor')->with('created_user'),
                 $filter
             );
         }
-
         return view('task.index', compact('tasks', 'user'));
 
     }
@@ -54,8 +49,9 @@ class TaskController extends Controller
 
     public function edit($id)
     {
-        $task = Task::find($id)->toArray();
-        return view('task.edit', compact('task'));
+        $user = Auth::user();
+        $task = Task::find($id);
+        return view('task.edit', compact('task', 'user'));
     }
 
     public function update(Request $request, $id)
@@ -77,7 +73,7 @@ class TaskController extends Controller
     {
         $user = Auth::user();
         $tasks = Task::where('created_userId', $id)->get();
-        return view('task.index', compact('tasks', 'user'));
+        return view('task.mytasks', compact('tasks', 'user'));
     }
 
 }

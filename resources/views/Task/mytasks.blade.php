@@ -2,7 +2,6 @@
 
 @section('content')
 <div class="task-content">
-    @include('Task.filter')
     <table class="task-table">
         <thead>
         <tr>
