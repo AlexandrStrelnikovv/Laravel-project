@@ -13,7 +13,7 @@ Route::get('/user/{id}/tasks', [TaskController::class, 'show'])->name('tasks.sho
 Route::post('/task/{id}', [TaskController::class, 'completed'])->name('tasks.completed');
 Route::post('store', [TaskController::class, 'store'])->name('tasks.store');
 Route::put('task/{id}', [TaskController::class, 'update'])->name('task.update');
-Route::put('/completed/{id}', [TaskController::class, 'completed'])->name('tasks.completed');
+
 
 
 Route::middleware('auth')->group(function () {

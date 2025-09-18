@@ -14,8 +14,8 @@
             <div>
                 <select class="card-title" name="priority">
                     <option value="низкий">низкий</option>
-                    <option value="высокий">средний</option>
-                    <option value="срочный">высокий</option>
+                    <option value="средний">средний</option>
+                    <option value="высокий">высокий</option>
                 </select>
             </div>
             <div>
