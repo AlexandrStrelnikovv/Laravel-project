@@ -42,7 +42,7 @@ class TaskController extends Controller
 
     public function store(Request $request) {
         $data = $request->array();
-        $data['created_userId'] = '1';
+        $data['created_user_Id'] = '1';
         Task::create($data);
         return redirect()->route('tasks.index');
     }
@@ -72,7 +72,7 @@ class TaskController extends Controller
     public function show($id)
     {
         $user = Auth::user();
-        $tasks = Task::where('created_userId', $id)->get();
+        $tasks = Task::where('created_user_Id', $id)->get();
         return view('task.mytasks', compact('tasks', 'user'));
     }
 

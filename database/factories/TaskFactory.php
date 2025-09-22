@@ -21,7 +21,7 @@ class TaskFactory extends Factory
             'name' => $this->faker->sentence(4),
             'description' => $this->faker->text(),
             'priority' => $this->faker->randomElement(['низкий', 'средний', 'высокий']),
-            'created_userid' => User::inRandomOrder()->first()->id,
+            'created_user_id' => User::inRandomOrder()->first()->id,
             'executor_user_id' => User::inRandomOrder()->first()->id,
         ];
     }
