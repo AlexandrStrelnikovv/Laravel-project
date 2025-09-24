@@ -11,24 +11,24 @@
 <body>
 <div class="page-wrapper">
     <nav>
-            <div class="header">
-                <div class="nav-menu">
-                        <a class="nav-link" href="{{ route('tasks.index') }}">Главная</a>
-                        <a class="nav-link" href="{{ route('tasks.show', ['id' => $user['id']]) }}">Мои задачи</a>
-                        <a class="nav-link" href="{{ route('tasks.create') }}">Создать задачу</a>
+        <div class="header">
+            <div class="nav-menu">
+                <a class="nav-link" href="{{ route('tasks.index') }}">Главная</a>
+                <a class="nav-link" href="{{ route('tasks.show', ['id' => $user['id']]) }}">Мои задачи</a>
+                <a class="nav-link" href="{{ route('tasks.create') }}">Создать задачу</a>
 
-                        <a>{{ $user['name'] }}</a>
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
+                <a>{{ $user['name'] }}</a>
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
 
-                            <x-dropdown-link :href="route('logout')"
-                                             onclick="event.preventDefault();
+                    <x-dropdown-link :href="route('logout')"
+                                     onclick="event.preventDefault();
                         this.closest('form').submit();">
-                                {{ __('Выйти') }}
-                            </x-dropdown-link>
-                        </form>
-                </div>
+                        {{ __('Выйти') }}
+                    </x-dropdown-link>
+                </form>
             </div>
+        </div>
     </nav>
     <div class="flex-grow-1 container my-4">
         @yield('content')

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Services\TaskService;
 use Illuminate\Http\Request;
 use App\Models\Task;
 use App\Filters\TaskFilter;
@@ -10,25 +11,18 @@ use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
 {
+    protected TaskService $taskService;
+    public function __construct(TaskService $taskService )
+    {
+        $this->taskService = $taskService;
+    }
     public function index(Request $request)
     {
         $user = Auth::user();
         $userId = Auth::user()->id;
-
         $filter = $request->all();
-        if (empty($filter)) {
-            $tasks = Task::where('executor_user_id', $userId)
-                ->where('status', '!=', 'выполнено')
-                ->with('executor')
-                ->with('created_user')
-                ->get();
-        } else {
+        $tasks = $this->taskService->getTasks($userId, $filter);
 
-            $tasks = TaskFilter::apply(
-                Task::where('executor_user_id', $userId)->with('executor')->with('created_user'),
-                $filter
-            );
-        }
         return view('task.index', compact('tasks', 'user'));
 
     }
@@ -42,7 +36,7 @@ class TaskController extends Controller
 
     public function store(Request $request) {
         $data = $request->array();
-        $data['created_userId'] = '1';
+        $data['created_user_Id'] = '1';
         Task::create($data);
         return redirect()->route('tasks.index');
     }
@@ -72,7 +66,7 @@ class TaskController extends Controller
     public function show($id)
     {
         $user = Auth::user();
-        $tasks = Task::where('created_userId', $id)->get();
+        $tasks = Task::where('created_user_Id', $id)->get();
         return view('task.mytasks', compact('tasks', 'user'));
     }
 

@@ -12,7 +12,7 @@ class Task extends Model
 
     public function executor()
     {
-        return $this->belongsTo(User::class, 'created_userId');
+        return $this->belongsTo(User::class, 'created_user_Id');
     }
 
     public function created_user()

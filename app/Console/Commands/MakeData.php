@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\Models\User;
 use App\Models\Task;
+use Illuminate\Support\Facades\Artisan;
 
 class MakeData extends Command
 {
@@ -27,11 +28,9 @@ class MakeData extends Command
      */
     public function handle()
     {
-//        $user = User::find(1);
-//        $tasks = $user->tasks->toArray();
-//        dd($tasks);
-
         $this->create();
+        Artisan::call('db:seed');
+        return 'Успешно';
     }
 
     public function create()

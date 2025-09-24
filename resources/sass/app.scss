@@ -36,6 +36,22 @@ body {
     text-overflow: ellipsis;
 }
 
+.task-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.task-create {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+.task-content div {
+    padding: 5px;
+}
+
 .button_done {
     border-radius: 5px;
     padding: 8px 12px;
