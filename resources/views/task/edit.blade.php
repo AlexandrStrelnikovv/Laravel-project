@@ -8,10 +8,10 @@
             <div class="task-content">
                 <div class="task-create">
                     <div>
-                        <input class="card-title" type="text" name="name" placeholder="{{ $task['name'] }}">
+                        <input class="card-title" type="text" name="name" value="{{ $task['name'] }}">
                     </div>
                     <div>
-                        <input class="card-title" type="text" name="description" placeholder="{{ $task['description'] }}">
+                        <input class="card-title" type="text" name="description" value="{{ $task['description'] }}">
                     </div>
                     <div>
                         <label>Приоритет</label>
@@ -26,6 +26,13 @@
                     </div>
                 </div>
             </div>
+            @if($errors->any())
+                @foreach($errors->all() as $error)
+                    <div>
+                        {{$error}}
+                    </div>
+                @endforeach
+            @endif
         </form>
     </div>
 @endsection

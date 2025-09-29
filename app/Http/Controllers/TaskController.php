@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\DTO\CreateTaskDTO;
+use App\DTO\UpdateTaskDTO;
 use App\Models\User;
 use App\Services\TaskService;
+use App\Services\UserService;
+use App\Services\ValidateService;
 use Illuminate\Http\Request;
 use App\Models\Task;
 use App\Filters\TaskFilter;
@@ -18,10 +22,10 @@ class TaskController extends Controller
     }
     public function index(Request $request)
     {
-        $user = Auth::user();
-        $userId = Auth::user()->id;
+        $user = UserService::getUser();
         $filter = $request->all();
-        $tasks = $this->taskService->getTasks($userId, $filter);
+
+        $tasks = $this->taskService->getTasks($user['id'], $filter);
 
         return view('task.index', compact('tasks', 'user'));
 
@@ -29,45 +33,53 @@ class TaskController extends Controller
 
     public function create()
     {
-        $user = Auth::user();
-        $executors = User::all()->toArray();
+        $user = UserService::getUser();
+        $executors = UserService::getUsers();
         return view('task.create', compact('executors', 'user'));
     }
 
     public function store(Request $request) {
-        $data = $request->array();
-        $data['created_user_Id'] = '1';
-        Task::create($data);
+        $validate = ValidateService::ValidateTask($request);
+        $userId = UserService::getUserId();
+        if(!$validate['success'])
+            {
+                return redirect()->back()->withErrors($validate['errors'])->withInput();
+            }
+        $TaskDTO = CreateTaskDTO::fromArray($validate['validData']);
+        $this->taskService->createTask($TaskDTO, $userId);
         return redirect()->route('tasks.index');
     }
 
     public function edit($id)
     {
-        $user = Auth::user();
-        $task = Task::find($id);
+        $user = UserService::getUser();
+        $task = $this->taskService->getTask($id);
         return view('task.edit', compact('task', 'user'));
     }
 
     public function update(Request $request, $id)
     {
-        $task = Task::find($id);
-        $task->update($request->all());
+        $validate = ValidateService::ValidateUpdatedTask($request);
+        if(!$validate['success'])
+        {
+            return redirect()->back()->withErrors($validate['errors'])->withInput();
+        }
+        $taskDTO = UpdateTaskDTO::fromArray($validate['validData']);
+        $taskUpdated = TaskService::updateTask($id, $taskDTO);
         return redirect()->route('tasks.index');
     }
 
     public function completed($id)
     {
-        $task = Task::find($id);
-        $task->status = 'выполнено';
-        $task->save();
+        TaskService::completedTask($id);
         return redirect()->route('tasks.index');
     }
 
     public function show($id)
     {
-        $user = Auth::user();
-        $tasks = Task::where('created_user_Id', $id)->get();
-        return view('task.mytasks', compact('tasks', 'user'));
+        $user = UserService::getUser();
+        $tasks = TaskService::getTask($user['id']);
+        return view('task.tasks', compact('tasks', 'user'));
     }
 
 }

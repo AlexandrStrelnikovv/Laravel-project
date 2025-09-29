@@ -6,10 +6,10 @@
         <div class="task-content">
             <div class="task-create">
                 <div>
-                    <input class="card-title" type="text" name="name" placeholder="Название задачи">
+                    <input class="card-title" type="text" name="name" placeholder="Название задачи" value="{{ old('name') }}">
                 </div>
                 <div>
-                    <input class="card-title" type="text" name="description" placeholder="Текст задачи">
+                    <input class="card-title" type="text" name="description" placeholder="Текст задачи" value="{{ old('description') }}">
                 </div>
                 <div>
                     <label>Приоритет</label>
@@ -32,6 +32,13 @@
                 <div>
                     <input type="submit" class="btn btn-success btn-sm">
                 </div>
+                    @if($errors->any())
+                        @foreach($errors->all() as $error)
+                            <div>
+                                {{$error}}
+                            </div>
+                        @endforeach
+                    @endif
             </div>
         </div>
     </form>
