@@ -70,7 +70,7 @@ class TaskService
 
     public static function getTask(int $id)
     {
-        return Task::where('created_user_Id', $id)->get();
+        return Task::where('id', $id)->first();
     }
 
 }

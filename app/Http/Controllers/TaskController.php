@@ -54,7 +54,12 @@ class TaskController extends Controller
     {
         $user = UserService::getUser();
         $task = $this->taskService->getTask($id);
-        return view('task.edit', compact('task', 'user'));
+        $data =
+            [
+              'user' => $user,
+              'task' => $task,
+            ];
+        return view('task.edit', $data);
     }
 
     public function update(Request $request, $id)
