@@ -8,7 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Task extends Model
 {
     use HasFactory;
-    protected $guarded = [];
+    protected $fillable = [
+        'name',
+        'description',
+        'priority',
+        'status',
+        'created_user_Id',
+        'executor_user_id',
+    ];
 
     public function executor()
     {

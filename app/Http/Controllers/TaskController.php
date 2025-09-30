@@ -57,7 +57,7 @@ class TaskController extends Controller
     public function edit($id)
     {
         $user = $this->userService->getUser();
-        $task = $this->taskService->getTask($id);
+        $task = $this->taskService->getTaskById($id);
         $data =
             [
               'user' => $user,
@@ -84,10 +84,10 @@ class TaskController extends Controller
         return redirect()->route('tasks.index');
     }
 
-    public function getMyTasks()
+    public function userCreatedTasks()
     {
         $user = $this->userService->getUser();
-        $tasks = $this->taskService->getTask($user['id']);
+        $tasks = $this->taskService->getTasksByCreatorId($user['id']);
         return view('task.tasks', compact('tasks', 'user'));
     }
 

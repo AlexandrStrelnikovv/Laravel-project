@@ -41,6 +41,11 @@ class TaskService
         return true;
     }
 
+    public function getTaskById(int $id)
+    {
+        return Task::find($id);
+    }
+
     public function updateTask(int $id, UpdateTaskDTO $taskDTO)
     {
         $task = Task::find($id);
@@ -60,6 +65,14 @@ class TaskService
         $task->status = 'выполнено';
         $task->save();
         return true;
+    }
+
+    public function getTasksByCreatorId(int $id)
+    {
+        return Task::where('created_user_Id', $id)
+            ->with('executor')
+            ->with('created_user')
+            ->get();
     }
 
 }
