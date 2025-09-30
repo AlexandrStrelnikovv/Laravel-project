@@ -16,13 +16,17 @@ use Illuminate\Support\Facades\Auth;
 class TaskController extends Controller
 {
     protected TaskService $taskService;
-    public function __construct(TaskService $taskService )
+    protected UserService $userService;
+    protected ValidateService $validateService;
+    public function __construct(TaskService $taskService, UserService $userService, ValidateService $validateService )
     {
         $this->taskService = $taskService;
+        $this->userService = $userService;
+        $this->validateService = $validateService;
     }
     public function index(Request $request)
     {
-        $user = UserService::getUser();
+        $user = $this->userService->getUser();
         $filter = $request->all();
 
         $tasks = $this->taskService->getTasks($user['id'], $filter);
@@ -33,14 +37,14 @@ class TaskController extends Controller
 
     public function create()
     {
-        $user = UserService::getUser();
-        $executors = UserService::getUsers();
+        $user = $this->userService->getUser();
+        $executors = $this->userService->getUsers();
         return view('task.create', compact('executors', 'user'));
     }
 
     public function store(Request $request) {
-        $validate = ValidateService::ValidateTask($request);
-        $userId = UserService::getUserId();
+        $validate = $this->validateService->ValidateTask($request);
+        $userId = $this->userService->getUserId();
         if(!$validate['success'])
             {
                 return redirect()->back()->withErrors($validate['errors'])->withInput();
@@ -52,7 +56,7 @@ class TaskController extends Controller
 
     public function edit($id)
     {
-        $user = UserService::getUser();
+        $user = $this->userService->getUser();
         $task = $this->taskService->getTask($id);
         $data =
             [
@@ -64,26 +68,26 @@ class TaskController extends Controller
 
     public function update(Request $request, $id)
     {
-        $validate = ValidateService::ValidateUpdatedTask($request);
+        $validate = $this->validateService->ValidateUpdatedTask($request);
         if(!$validate['success'])
         {
             return redirect()->back()->withErrors($validate['errors'])->withInput();
         }
         $taskDTO = UpdateTaskDTO::fromArray($validate['validData']);
-        $taskUpdated = TaskService::updateTask($id, $taskDTO);
+        $taskUpdated = $this->taskService->updateTask($id, $taskDTO);
         return redirect()->route('tasks.index');
     }
 
     public function completed($id)
     {
-        TaskService::completedTask($id);
+        $this->taskService->completedTask($id);
         return redirect()->route('tasks.index');
     }
 
-    public function show($id)
+    public function getMyTasks()
     {
-        $user = UserService::getUser();
-        $tasks = TaskService::getTask($user['id']);
+        $user = $this->userService->getUser();
+        $tasks = $this->taskService->getTask($user['id']);
         return view('task.tasks', compact('tasks', 'user'));
     }
 

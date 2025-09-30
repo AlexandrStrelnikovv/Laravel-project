@@ -10,7 +10,7 @@ use App\Models\Task;
 
 class TaskService
 {
-    public static function getTasks(int $userId, array $filter)
+    public function getTasks(int $userId, array $filter = [])
     {
         if (empty($filter)) {
             $tasks = Task::where('executor_user_id', $userId)
@@ -29,7 +29,7 @@ class TaskService
         }
     }
 
-    public static function createTask(CreateTaskDTO $TaskDTO, int $userID)
+    public function createTask(CreateTaskDTO $TaskDTO, int $userID)
     {
         $task = Task::create([
             'name' => $TaskDTO->name,
@@ -41,7 +41,7 @@ class TaskService
         return true;
     }
 
-    public static function updateTask(int $id, UpdateTaskDTO $taskDTO)
+    public function updateTask(int $id, UpdateTaskDTO $taskDTO)
     {
         $task = Task::find($id);
         $task->update(
@@ -54,23 +54,12 @@ class TaskService
         return true;
     }
 
-    public static function completedTask(int $id)
+    public function completedTask(int $id)
     {
         $task = Task::find($id);
         $task->status = 'выполнено';
         $task->save();
         return true;
-    }
-
-    public function showTask(int $id)
-    {
-        return Task::where('created_user_Id', $id)->get();
-
-    }
-
-    public static function getTask(int $id)
-    {
-        return Task::where('id', $id)->first();
     }
 
 }

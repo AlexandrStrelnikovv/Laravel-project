@@ -8,7 +8,7 @@ use function Laravel\Prompts\error;
 
 class ValidateService
 {
-    public static function ValidateTask(Request $request)
+    public function ValidateTask(Request $request)
     {
         $validate = Validator::make($request->all(),
             [
@@ -37,7 +37,7 @@ class ValidateService
         ];
     }
 
-    public static function ValidateUpdatedTask(Request $request)
+    public function ValidateUpdatedTask(Request $request)
     {
         $validate = Validator::make($request->all(),
             [

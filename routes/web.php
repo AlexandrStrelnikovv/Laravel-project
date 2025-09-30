@@ -9,7 +9,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/task', [TaskController::class, 'index'])->name('tasks.filter');
     Route::get('/task/{id}', [TaskController::class, 'edit'])->name('task.edit');
     Route::get('/create', [TaskController::class, 'create'])->name('tasks.create');
-    Route::get('/user/{id}/tasks', [TaskController::class, 'show'])->name('tasks.show');
+    Route::get('/user/{id}/tasks', [TaskController::class, 'getMyTasks'])->name('tasks.show');
 
     Route::post('/task/{id}', [TaskController::class, 'completed'])->name('tasks.completed');
     Route::post('store', [TaskController::class, 'store'])->name('tasks.store');

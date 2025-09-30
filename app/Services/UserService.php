@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 
 class UserService
 {
-    static public function getUser(int $userId = null) : array
+    public function getUser(int $userId = null) : array
     {
         if (null === $userId) {
             $user = Auth::user();
@@ -23,7 +23,7 @@ class UserService
         ];
     }
 
-    static public function getUsers() : array
+    public function getUsers() : array
     {
         $users = [];
         foreach (DB::table('users')->get() as $user) {
@@ -36,7 +36,7 @@ class UserService
         return $users;
     }
 
-    static public function getUserId()
+    public function getUserId()
     {
         return Auth::id();
     }
