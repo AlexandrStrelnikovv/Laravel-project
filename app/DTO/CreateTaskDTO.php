@@ -11,7 +11,7 @@ class CreateTaskDTO
         public readonly string $name,
         public readonly string $description,
         public readonly string $priority,
-        public readonly string $executor_user_id,
+        public readonly int $executor_user_id,
     )
     {}
 

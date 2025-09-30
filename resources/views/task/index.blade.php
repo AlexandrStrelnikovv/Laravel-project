@@ -27,6 +27,7 @@
                         <a class="done-link" href="{{ route('task.edit', ['id' => $task['id']]) }}">Редактировать</a>
                         <form method="POST" action="{{ route('tasks.completed', ['id' => $task['id']]) }}">
                             @csrf
+                            @method('PATCH')
                             @if($user['id'] === $task['executor_user_id'])
                                 <button class="button_done" type="submit">Выполнить</button>
                             @endif
