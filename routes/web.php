@@ -22,4 +22,12 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::get('/', function () {
+    if (auth()->check()) {
+        return redirect()->route('tasks.index');
+    }
+
+    return redirect()->route('login');
+});
+
 require __DIR__.'/auth.php';

@@ -30,3 +30,7 @@ Task Manager — это веб-приложение на Laravel для эффе
 8  - php atrisan migrate   
 9  - php artisan make:data  
 10 - php artisan db:seed  
+
+Зайти можно по пользователю  
+login - vova@mail.ru  
+password - vova  
