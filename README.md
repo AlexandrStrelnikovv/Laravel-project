@@ -13,7 +13,7 @@ Task Manager — это веб-приложение на Laravel для эффе
    
 Чтобы запустить приложение:   
 1 - git clone https://github.com/AlexandrStrelnikovv/Laravel-project.git  
-2 - composer install   
+2 - composer update  
 3 - npm install   
 4 - Создайте файл .env в корне проекта и добавьте следующие настройки  
 {  
